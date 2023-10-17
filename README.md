@@ -1,24 +1,21 @@
-# demo
+## 运行
 
-## Project setup
 ```
 npm install
-```
-
-### Compiles and hot-reloads for development
-```
 npm run serve
 ```
 
-### Compiles and minifies for production
-```
-npm run build
-```
+##  使用技术栈
 
-### Lints and fixes files
-```
-npm run lint
-```
+Vue2 + ElementUI
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+ElementUI地址：https://element.eleme.cn/#/zh-CN，选取组件即可
+
+## 说明
+
+现在代码有点乱，仅供参考，整合的时候再研究一下……
+
+我最初写的代码主要在HomeView.vue中，然后大家先自己创建自己的页面开发，然后这两天可以把代码结构整理一下
+
+## 有问题在群里聊
+
