@@ -3,9 +3,13 @@
     <el-container>
       <el-header>
         <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect">
-          <el-menu-item index="1">风险识别</el-menu-item>
+          <el-menu-item index="1"><a href="/" style="text-decoration: none;">风险识别</a></el-menu-item>
           <el-menu-item index="2">风险信息总览</el-menu-item>
-          <el-menu-item index="3">风险评估记录</el-menu-item>
+          <el-menu-item index="3"><a href="/record" style="text-decoration: none;">风险评估记录</a></el-menu-item>
+          <el-menu-item index="4" style="margin-left: 60%">
+            <el-avatar src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"></el-avatar>
+            个人中心
+          </el-menu-item>
         </el-menu>
       </el-header>
       <el-container>
@@ -15,7 +19,7 @@
               style="height: 800px">
             <el-menu-item index="1">
               <i class="el-icon-menu"></i>
-              <span slot="title">资产识别</span>
+              <span slot="title"><a href="/" style="text-decoration: none;">资产识别</a></span>
             </el-menu-item>
             <el-menu-item index="2">
               <i class="el-icon-document"></i>
@@ -25,10 +29,22 @@
               <i class="el-icon-setting"></i>
               <span slot="title">脆弱性识别</span>
             </el-menu-item>
+            <el-menu-item index="4">
+              <i class="el-icon-setting"></i>
+              <span slot="title">安全措施识别</span>
+            </el-menu-item>
+            <el-menu-item index="5">
+              <i class="el-icon-menu"></i>
+              <span slot="title"><a href="/about" style="text-decoration: none;">资产评估</a></span>
+            </el-menu-item>
           </el-menu>
         </el-aside>
         <el-main>
           <el-tabs v-model="activeName" type="card" @tab-click="handleClick">
+            <el-tab-pane label="资产信息" name="zero">
+              <el-input v-model="propertyNum" placeholder="请输入资产编号"></el-input>
+              <el-input v-model="propertyName" placeholder="请输入资产名称"></el-input>
+            </el-tab-pane>
             <!-- 1 业务识别 -->
             <el-tab-pane label="业务识别" name="first">
               <el-button type="primary" @click="addBusiness"><i class="el-icon-circle-plus-outline"></i>添加待识别业务</el-button>
@@ -331,7 +347,7 @@
                   </el-form>
                 </el-card>
               </div>
-              <el-button type="success" style="margin-top: 20px;width:20%">提交</el-button>
+              <el-button type="success" @click="submit" style="margin-top: 20px;width:20%">提交</el-button>
             </el-tab-pane>
           </el-tabs>
         </el-main>
@@ -348,6 +364,8 @@ export default {
   name: 'HomeView',
   data() {
     return {
+      propertyNum:'',
+      propertyName:'',
       activeName: 'first',
       activeIndex: '1',
       //1
@@ -362,101 +380,101 @@ export default {
         //1-2
         role:'',
         options_fitness:[{
-          value: '选项1',
+          value: '很高',
           label: '很高'
         }, {
-          value: '选项2',
+          value: '高',
           label: '高'
         }, {
-          value: '选项3',
+          value: '中',
           label: '中'
         }, {
-          value: '选项4',
+          value: '低',
           label: '低'
         }, {
-          value: '选项5',
+          value: '很低',
           label: '很低'
         }],
         value_fitness:'',
         options_layout:[{
-          value: '选项1',
+          value: '很高',
           label: '很高'
         }, {
-          value: '选项2',
+          value: '高',
           label: '高'
         }, {
-          value: '选项3',
+          value: '中',
           label: '中'
         }, {
-          value: '选项4',
+          value: '低',
           label: '低'
         }, {
-          value: '选项5',
+          value: '很低',
           label: '很低'
         }],
         value_layout:'',
         options_competitiveness:[{
-          value: '选项1',
+          value: '很高',
           label: '很高'
         }, {
-          value: '选项2',
+          value: '高',
           label: '高'
         }, {
-          value: '选项3',
+          value: '中',
           label: '中'
         }, {
-          value: '选项4',
+          value: '低',
           label: '低'
         }, {
-          value: '选项5',
+          value: '很低',
           label: '很低'
         }],
         value_competitiveness:'',
         positions:[],
         //1-3
         options_integrity:[{
-            value: '1',
+            value: '独立业务',
             label: '独立业务'
         }, {
-            value: '2',
+            value: '非独立业务',
             label: '非独立业务'
           }],
         value_integrity:'',
         options_class:[{
-          value: '选项1',
+          value: '并列关系',
           label: '并列关系'
         }, {
-          value: '选项2',
+          value: '父子关系',
           label: '父子关系'
         }, {
-          value: '选项3',
+          value: '间接关系',
           label: '间接关系'
         }],
         value_class:'',
         //1-4
         options_relation:[{
-          value: '选项1',
+          value: '紧密关联',
           label: '紧密关联'
         }, {
-          value: '选项2',
+          value: '非紧密关联',
           label: '非紧密关联'
         }],
         value_relation:'',
         //1-5
         options_evaluation:[{
-            value: '选项1',
+            value: '很高',
             label: '很高'
           }, {
-            value: '选项2',
+            value: '高',
             label: '高'
           }, {
-            value: '选项3',
+            value: '中',
             label: '中'
           }, {
-            value: '选项4',
+            value: '低',
             label: '低'
           }, {
-            value: '选项5',
+            value: '很低',
             label: '很低'
           }],
         value_evaluation:''
@@ -465,67 +483,67 @@ export default {
       system:[{
         //2-1
         options:[{
-          value: '选项1',
+          value: '信息系统',
           label: '信息系统'
         }, {
-          value: '选项2',
+          value: '数据资源',
           label: '数据资源'
         }, {
-          value: '选项3',
+          value: '通信网络',
           label: '通信网络'
         }],
         values:'',
         //2-2
         kind:'',
         options1: [{
-          value: '选项1',
+          value: '极高',
           label: '极高'
         }, {
-          value: '选项2',
+          value: '高',
           label: '高'
         }, {
-          value: '选项3',
+          value: '中',
           label: '中'
         }, {
-          value: '选项4',
+          value: '低',
           label: '低'
         }, {
-          value: '选项5',
+          value: '极低',
           label: '极低'
         }],
         value1: '',
         options2: [{
-          value: '选项1',
+          value: '极高',
           label: '极高'
         }, {
-          value: '选项2',
+          value: '高',
           label: '高'
         }, {
-          value: '选项3',
+          value: '中',
           label: '中'
         }, {
-          value: '选项4',
+          value: '低',
           label: '低'
         }, {
-          value: '选项5',
+          value: '极低',
           label: '极低'
         }],
         value2: '',
         //2-3
         options_evaluation: [{
-          value: '选项1',
+          value: '很高',
           label: '很高'
         }, {
-          value: '选项2',
+          value: '高',
           label: '高'
         }, {
-          value: '选项3',
+          value: '中',
           label: '中'
         }, {
-          value: '选项4',
+          value: '低',
           label: '低'
         }, {
-          value: '选项5',
+          value: '很低',
           label: '很低'
         }],
         value_evaluation: '',
@@ -534,87 +552,87 @@ export default {
       components:[{
         name:'',
         options: [{
-          value: '1',
+          value: '计算机设备',
           label: '计算机设备'
         }, {
-          value: '2',
+          value: '存储设备',
           label: '存储设备'
         }, {
-          value: '3',
+          value: '智能终端设备',
           label: '智能终端设备'
         }, {
-          value: '4',
+          value: '网络设备',
           label: '网络设备'
         }, {
-          value: '5',
+          value: '传输设备',
           label: '传输设备'
         }, {
-          value: '6',
+          value: '安全设备',
           label: '安全设备'
         }],
         value: [],
         options2: [{
-          value: '1',
+          value: '应用系统',
           label: '应用系统'
         }, {
-          value: '2',
+          value: '应用软件',
           label: '应用软件'
         }, {
-          value: '3',
+          value: '系统软件',
           label: '系统软件'
         }, {
-          value: '4',
+          value: '支撑平台',
           label: '支撑平台'
         }, {
-          value: '5',
+          value: '服务接口',
           label: '服务接口'
         }],
         value2: [],
         options3: [{
-          value: '1',
+          value: '运维人员',
           label: '运维人员'
         }, {
-          value: '2',
+          value: '业务操作人员',
           label: '业务操作人员'
         }, {
-          value: '3',
+          value: '安全管理人员',
           label: '安全管理人员'
         }, {
-          value: '4',
+          value: '外包服务人员',
           label: '外包服务人员'
         }],
         value3: [],
         options4: [{
-          value: '1',
+          value: '数据资料',
           label: '数据资料'
         }, {
-          value: '2',
+          value: '办公设备',
           label: '办公设备'
         }, {
-          value: '3',
+          value: '保障设备',
           label: '保障设备'
         }, {
-          value: '4',
+          value: '服务',
           label: '服务'
         }, {
-          value: '5',
+          value: '知识产权',
           label: '知识产权'
         }],
         value4: [],
         options_eva: [{
-          value: '选项1',
+          value: '极高',
           label: '极高'
         }, {
-          value: '选项2',
+          value: '高',
           label: '高'
         }, {
-          value: '选项3',
+          value: '中',
           label: '中'
         }, {
-          value: '选项4',
+          value: '低',
           label: '低'
         }, {
-          value: '选项5',
+          value: '极低',
           label: '极低'
         }],
         value_eva: '',
@@ -622,6 +640,23 @@ export default {
     };
   },
   methods: {
+    submit(){
+      var kof2 = localStorage.getItem('propertyInfo')
+      console.log(kof2)
+      var kof =JSON.parse(kof2)
+        var info={
+          id:this.propertyNum,
+          name:this.propertyName,
+          time:Date(),
+          business:this.business,
+          system:this.system,
+          components:this.components
+        }
+      kof.push(info)
+      console.log("222")
+      localStorage.setItem('propertyInfo', JSON.stringify(kof));
+
+    },
     handleClick(tab, event) {
       console.log(tab, event);
     },
@@ -644,51 +679,51 @@ export default {
         attribute:[],
         role:'',
         options_layout: [{
-          value: '选项1',
+          value: '很高',
           label: '很高'
         }, {
-          value: '选项2',
+          value: '高',
           label: '高'
         }, {
-          value: '选项3',
+          value: '中',
           label: '中'
         }, {
-          value: '选项4',
+          value: '低',
           label: '低'
         }, {
-          value: '选项5',
+          value: '很低',
           label: '很低'
         }],
         options_fitness: [{
-          value: '选项1',
+          value: '很高',
           label: '很高'
         }, {
-          value: '选项2',
+          value: '高',
           label: '高'
         }, {
-          value: '选项3',
+          value: '中',
           label: '中'
         }, {
-          value: '选项4',
+          value: '低',
           label: '低'
         }, {
-          value: '选项5',
+          value: '很低',
           label: '很低'
         }],
         options_competitiveness: [{
-          value: '选项1',
+          value: '很高',
           label: '很高'
         }, {
-          value: '选项2',
+          value: '高',
           label: '高'
         }, {
-          value: '选项3',
+          value: '中',
           label: '中'
         }, {
-          value: '选项4',
+          value: '低',
           label: '低'
         }, {
-          value: '选项5',
+          value: '很低',
           label: '很低'
         }],
         value_layout: '',
@@ -696,46 +731,46 @@ export default {
         value_competitiveness: '',
         positions:[],
         options_integrity:[{
-          value: '1',
+          value: '独立业务',
           label: '独立业务'
         }, {
-          value: '2',
+          value: '非独立业务',
           label: '非独立业务'
         }],
         value_integrity:'',
         options_class:[{
-          value: '选项1',
+          value: '并列关系',
           label: '并列关系'
         }, {
-          value: '选项2',
+          value: '父子关系',
           label: '父子关系'
         }, {
-          value: '选项3',
+          value: '间接关系',
           label: '间接关系'
         }],
         value_class:'',
         options_relation:[{
-          value: '选项1',
+          value: '紧密关联',
           label: '紧密关联'
         }, {
-          value: '选项2',
+          value: '非紧密关联',
           label: '非紧密关联'
         }],
         value_relation:'',
         options_evaluation:[{
-          value: '选项1',
+          value: '很高',
           label: '很高'
         }, {
-          value: '选项2',
+          value: '高',
           label: '高'
         }, {
-          value: '选项3',
+          value: '中',
           label: '中'
         }, {
-          value: '选项4',
+          value: '低',
           label: '低'
         }, {
-          value: '选项5',
+          value: '很低',
           label: '很低'
         }],
         value_evaluation:'',
@@ -751,65 +786,65 @@ export default {
     addSystem() {
       this.system.push({
             options:[{
-              value: '选项1',
+              value: '信息系统',
               label: '信息系统'
             }, {
-              value: '选项2',
+              value: '数据资源',
               label: '数据资源'
             }, {
-              value: '选项3',
+              value: '通信网络',
               label: '通信网络'
             }],
             values:'',
         kind:'',
         options1: [{
-          value: '选项1',
+          value: '极高',
           label: '极高'
         }, {
-          value: '选项2',
+          value: '高',
           label: '高'
         }, {
-          value: '选项3',
+          value: '中',
           label: '中'
         }, {
-          value: '选项4',
+          value: '低',
           label: '低'
         }, {
-          value: '选项5',
+          value: '极低',
           label: '极低'
         }],
         value1: '',
         options2: [{
-          value: '选项1',
+          value: '极高',
           label: '极高'
         }, {
-          value: '选项2',
+          value: '高',
           label: '高'
         }, {
-          value: '选项3',
+          value: '中',
           label: '中'
         }, {
-          value: '选项4',
+          value: '低',
           label: '低'
         }, {
-          value: '选项5',
+          value: '极低',
           label: '极低'
         }],
         value2: '',
         options_evaluation: [{
-          value: '选项1',
+          value: '很高',
           label: '很高'
         }, {
-          value: '选项2',
+          value: '高',
           label: '高'
         }, {
-          value: '选项3',
+          value: '中',
           label: '中'
         }, {
-          value: '选项4',
+          value: '低',
           label: '低'
         }, {
-          value: '选项5',
+          value: '很低',
           label: '很低'
         }],
         value_evaluation: ''
